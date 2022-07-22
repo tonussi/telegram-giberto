@@ -1,8 +1,7 @@
-// Discord.js bot
+// Telegram bot
 const botgram = require("botgram")
 
-// process.env.TOKEN
-const bot = botgram(process.env.TOKEN)
+const bot = botgram("5452172201:AAEWqMFkEL_dS0UHxTlMMmug0tB36epg-F4")
 
 const viterp = require("./BibleCommandInterpreter");
 const citerp = require("./CommentaryCommandInterpreter");
