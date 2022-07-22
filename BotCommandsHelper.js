@@ -2,18 +2,16 @@ const config = {
   PREFIX: "/",
   INVITE: "Grupo De Estudos Bíblicos no Telegram https://t.me/joinchat/La_uwxUxu-_2PPd_pTmUMw (João 16.33)",
   HELP: {
-    en: "This bot, called \"Gilberto\" (from Wilbur \"Gilberto\" Norman Pickering), \
-show Bible verses from WPNT (A New Translation of The New Testament Text Based on \
-f³⁵ Manuscripts). Also, this bot, show verses from ACF (Almeida Corrigida Fiel 2007), \
+    en: "This bot show Bible verses from WPNT. WPNT is a translation of the New Testament text based on \
+the manuscripts of the family 35. Also, this bot, show verses from ACF (Almeida Corrigida Fiel 2007), \
 a Portuguese version of the Bible based on Masoretic Texts and Textus Receptus. \
 The bot was made to Portuguese users so the references will mostly be equated in Portuguese. \
 Type /c and push Enter to show the commands for you.",
-    pt: "Esse bot, chamado \"Gilberto\" (de Wilbur \"Gilberto\" Norman Pickering), \
-mostra versos bíblicos da WPNT (Uma Nova Tradução do Novo Testamento Baseado \
-nos manuscriptos da família f³⁵). Também, esse bot, mostra versos da ACF \
-(Almeida Corrigida Fiel 2007), uma versão Portuguesa da Bíblia baseada no \
-Texto Masorético e Textus Receptus. O bot foi feito para usuários da língua portuguesa. \
-Por isso as referências são estilo portugues brasileiro i.e. João, Marcos, Gênesis, etc. \
+    pt: "Esse bot mostra versos bíblicos da WPNT. WPNT é uma tradução baseada na família 35, de manuscritos. \
+Além disto, mostra versos da ACF (Almeida Corrigida Fiel 2007), \
+uma versão Portuguesa da Bíblia baseada no Texto Masorético e Textus Receptus. \
+O bot foi feito para usuários da língua portuguesa. \
+Por isto as referências são estilo portugues brasileiro i.e. João, Marcos, Gênesis, etc. \
 Utilize /c para ver os comandos do Bot."
   },
   ACTIVITY: "PRUNCH",
