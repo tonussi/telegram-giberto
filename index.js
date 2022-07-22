@@ -1,7 +1,7 @@
 // Telegram bot
 const botgram = require("botgram")
 
-const bot = botgram("")
+const bot = botgram("5452172201:AAEWqMFkEL_dS0UHxTlMMmug0tB36epg-F4")
 
 const viterp = require("./BibleCommandInterpreter");
 const citerp = require("./CommentaryCommandInterpreter");
