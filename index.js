@@ -1,8 +1,10 @@
-// Discord.js bot
+require("dotenv").config();
+
+// Telegram bot
 const botgram = require("botgram")
 
-// process.env.TOKEN
-const bot = botgram(process.env.TOKEN)
+let TOKEN = process.env.TOKEN
+const bot = botgram(TOKEN)
 
 const viterp = require("./BibleCommandInterpreter");
 const citerp = require("./CommentaryCommandInterpreter");
