@@ -2,7 +2,7 @@ const config = {
   PREFIX: "/",
   INVITE: "Grupo De Estudos Bíblicos no Telegram https://t.me/joinchat/La_uwxUxu-_2PPd_pTmUMw (João 16.33)",
   HELP: {
-    en: "This bot show Bible verses from WPNT. WPNT is a translation of the New Testament text based on \
+    en: "This bot shows Bible verses from WPNT. WPNT is a translation of the New Testament text based on \
 the manuscripts of the family 35. Also, this bot, show verses from ACF (Almeida Corrigida Fiel 2007), \
 a Portuguese version of the Bible based on Masoretic Texts and Textus Receptus. \
 The bot was made to Portuguese users so the references will mostly be equated in Portuguese. \
