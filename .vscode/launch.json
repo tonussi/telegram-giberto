@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://${workspaceFolder}/",
+            "request": "launch",
+            "url": "http://${workspaceFolder}/"
+        }
+    ]
+}

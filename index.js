@@ -1,7 +1,7 @@
 // Telegram bot
 const botgram = require("botgram")
 
-const bot = botgram("5452172201:AAEWqMFkEL_dS0UHxTlMMmug0tB36epg-F4")
+const bot = botgram("")
 
 const viterp = require("./BibleCommandInterpreter");
 const citerp = require("./CommentaryCommandInterpreter");
@@ -117,7 +117,12 @@ function prepareInput(msg) {
     return msg.args.raw.split(' ').slice(0, 3).join(' ');
 }
 
-bot.command("bv", (msg, reply) => {
+bot.command("bv", (msg, reply, next) => {
+    if (!msg.args.raw) {
+        reply.text("Não providenciou Capítulo e Verso");
+        return next();
+    }
+
     var args = prepareInput(msg);
     let versesParsed = bci.parseRef(args);
     // let osis = bci.getOsis(args);
@@ -125,7 +130,12 @@ bot.command("bv", (msg, reply) => {
     reply.text(embed);
 });
 
-bot.command("bc", (msg, reply) => {
+bot.command("bc", (msg, reply, next) => {
+    if (!msg.args.raw) {
+        reply.text("Não providenciou Capítulo e Verso");
+        return next();
+    }
+
     var args = prepareInput(msg);
     let versesParsed = cci.parseRef(args);
     // let osis = cci.getOsis(args);
@@ -133,28 +143,36 @@ bot.command("bc", (msg, reply) => {
     reply.text(embed, "Markdown");
 });
 
-bot.command("bd", (msg, reply) => {
+bot.command("bd", (msg, reply, next) => {
+    if (!msg.args.raw) {
+        reply.text("Não providenciou versão");
+        return next();
+    }
+
     var args = prepareInput(msg);
     let detail = bci.parseDetail(args).getEditionDescrition();
     let embed = buildTelegramRichEmbed(detail);
     reply.text(embed, "Markdown")
 });
 
-bot.command("bv", (msg, reply) => {
-    var args = prepareInput(msg);
-    let versesParsed = cci.parseRef(args);
-    let embed = buildCommentaryRichEmbed(versesParsed);
-    reply.text(embed)
-});
+bot.command("cd", (msg, reply, next) => {
+    if (!msg.args.raw) {
+        reply.text("Não providenciou nome");
+        return next();
+    }
 
-bot.command("cd", (msg, reply) => {
     var args = prepareInput(msg);
     let detail = cci.parseDetail(args).getEditionDescrition();
     let embed = buildTelegramRichEmbed(detail);
     reply.text(embed, "Markdown")
 });
 
-bot.command("bs", (msg, reply) => {
+bot.command("bs", (msg, reply, next) => {
+    if (!msg.args.raw) {
+        reply.text("Não providenciou nada para procurar");
+        return next();
+    }
+
     var args = prepareInput(msg);
     let versesParses = bci.parseWords(args);
     let embed = buildSearchRichEmbed(versesParses);
