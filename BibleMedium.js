@@ -47,14 +47,14 @@ class BibleMedium {
         if (sql_injection_barrier.test(element)) {
           return null;
         }
-        aux += `Scripture LIKE \"%${element}%\" OR `;
+        aux += `Scripture LIKE \'%${element}%\' OR `;
       }
-      aux += `Scripture LIKE \"%${words[words.length - 1]}%\")`;
+      aux += `Scripture LIKE \'%${words[words.length - 1]}%\')`;
     } else {
       if (sql_injection_barrier.test(words)) {
         return null;
       }
-      aux += `(Scripture LIKE \"%${words}%\")`;
+      aux += `(Scripture LIKE \'%${words}%\')`;
     }
 
     let sql = `SELECT * FROM bible WHERE Book=${book_number} AND ${aux} LIMIT 7;`;
