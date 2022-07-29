@@ -29,9 +29,10 @@
   "dependencies": {
     "better-sqlite3": "^7.6.2",
     "bible-passage-reference-parser": "^2.0.1",
+    "botgram": "*",
     "moment": "^2.23.0",
+    "natural": "*",
     "turndown": "^5.0.1",
-    "xml2js": "^0.4.19",
-    "botgram": "*"
+    "xml2js": "^0.4.19"
   }
 }
