@@ -41,42 +41,102 @@ class BibleCommandInterpreter {
     }
 
     parseWords(args) {
-        let verses = null;
+        let bible_version = null;
+        let bible_book = null;
         args = args.trim();
 
         if (RegExp(versions.BibleVersionEnum.WPNT).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.WPNT, wpnt);
+            bible_version = versions.BibleVersionEnum.WPNT;
+            bible_book = wpnt;
         } else if (RegExp(versions.BibleVersionEnum.ACF).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.ACF, acf);
+            bible_version = versions.BibleVersionEnum.ACF;
+            bible_book = acf;
         } else if (RegExp(versions.BibleVersionEnum.EMTV).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.EMTV, emtv);
+            bible_version = versions.BibleVersionEnum.EMTV;
+            bible_book = emtv;
         } else if (RegExp(versions.BibleVersionEnum.BYZ).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.BYZ, byz);
+            bible_version = versions.BibleVersionEnum.BYZ;
+            bible_book = byz;
         } else if (RegExp(versions.BibleVersionEnum.ITARIVE).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.ITARIVE, ita);
+            bible_version = versions.BibleVersionEnum.ITARIVE;
+            bible_book = ita;
         } else if (RegExp(versions.BibleVersionEnum.FREMRTN).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.FREMRTN, fre);
+            bible_version = versions.BibleVersionEnum.FREMRTN;
+            bible_book = fre;
         } else if (RegExp(versions.BibleVersionEnum.ISV).test(args)) {
-            verses = this.splitArguments(args, versions.BibleVersionEnum.ISV, isv);
+            bible_version = versions.BibleVersionEnum.ISV;
+            bible_book = isv;
         }
 
-        return verses;
+        let splitArgs = this.splitArguments(args, bible_version);
+
+        if (!splitArgs) return null;
+
+        return { tokens: splitArgs.args, book_number: splitArgs.book_number, bible_book: bible_book };
     }
 
-    splitArguments(args, edition_version, bible) {
+    getBibleById(bibleId) {
+        let bible_version = null;
+        let bible_book = null;
+        let args = bibleId.trim();
+
+        if (RegExp(versions.BibleVersionEnum.WPNT).test(args)) {
+            bible_version = versions.BibleVersionEnum.WPNT;
+            bible_book = wpnt;
+        } else if (RegExp(versions.BibleVersionEnum.ACF).test(args)) {
+            bible_version = versions.BibleVersionEnum.ACF;
+            bible_book = acf;
+        } else if (RegExp(versions.BibleVersionEnum.EMTV).test(args)) {
+            bible_version = versions.BibleVersionEnum.EMTV;
+            bible_book = emtv;
+        } else if (RegExp(versions.BibleVersionEnum.BYZ).test(args)) {
+            bible_version = versions.BibleVersionEnum.BYZ;
+            bible_book = byz;
+        } else if (RegExp(versions.BibleVersionEnum.ITARIVE).test(args)) {
+            bible_version = versions.BibleVersionEnum.ITARIVE;
+            bible_book = ita;
+        } else if (RegExp(versions.BibleVersionEnum.FREMRTN).test(args)) {
+            bible_version = versions.BibleVersionEnum.FREMRTN;
+            bible_book = fre;
+        } else if (RegExp(versions.BibleVersionEnum.ISV).test(args)) {
+            bible_version = versions.BibleVersionEnum.ISV;
+            bible_book = isv;
+        } else {
+            bible_version = versions.BibleVersionEnum.ACF;
+            bible_book = acf;
+        }
+
+        return bible_book;
+    }
+
+    splitArguments(args, edition_version) {
         let regex = `\\b${edition_version}\\s[a-zA-ZêãíóáÊúôéÉâ0-9\s]+\\b`;
         let index = args.search(regex, 'gi');
         let book = args.slice(index, args.length);
         book = book.replace(edition_version, '');
         book = book.trim();
         let book_number = constants.getSearchableBookNameById(book);
+
         if (book_number) {
             args = args.slice(0, index);
             args = args.trim();
             args = args.split(',');
-            return this.getVersesFromSearch(args, book_number, bible);
+            return { args: args, book_number: book_number }
         }
+
         return null;
+    }
+
+    searchArgsByBookNumberAndBibleBook(args, book_number, bible) {
+        if (!args) return null;
+
+        return this.getVersesFromSearch(args, book_number, bible);
+    }
+
+    searchArgsByBibleBook(args, bible) {
+        if (!args) return null;
+
+        return this.getVersesWholeBible(args, bible);
     }
 
     parseDetail(args) {
@@ -106,6 +166,10 @@ class BibleCommandInterpreter {
 
     getVersesFromSearch(args, book_number, bible) {
         return bible.searchTextBy(args, book_number);
+    }
+
+    getVersesWholeBible(args, bible) {
+        return bible.searchAnswersWholeBible(args);
     }
 
     getVersesParsed(args, bible) {

@@ -1,6 +1,5 @@
 const Database = require('better-sqlite3');
 const verselib = require("./BibleVerse");
-const versions = require("./BibleVersionEnum");
 
 class BibleMedium {
   /**
@@ -30,12 +29,6 @@ class BibleMedium {
     }
   }
 
-  selectMethod() {
-    if (method == versions.BibleSearchTypeEnum.BOOK) {
-      return searchTextByBook(words, book);
-    }
-  }
-  
   searchTextBy(words, book_number) {
     let aux = "(";
     let sql_injection_barrier = RegExp(/\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})\b/gim);
@@ -61,7 +54,45 @@ class BibleMedium {
     console.log(sql);
 
     let rows = this.processSQL(sql, 'ALL');
-    
+
+    if (rows) {
+      let listOfVerses = Array();
+      for (let index = 0; index < rows.length; index++) {
+        const element = rows[index];
+        listOfVerses.push(new verselib.Verse(element.Book, element.Chapter, element.Verse, element.Scripture));
+      }
+      return listOfVerses;
+    } else {
+      return [new verselib.Verse(0, 0, 0, 'Scripture Not Found')];
+    }
+  }
+
+  searchAnswersWholeBible(words) {
+    let aux = "(";
+    let sql_injection_barrier = RegExp(/\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})\b/gim);
+
+    if (words instanceof Array) {
+      for (let index = 0; index < words.length - 1; index++) {
+        const element = words[index];
+        // Just a simple barrier against some types of injection, nothing too much sophisticated.
+        if (sql_injection_barrier.test(element)) {
+          return null;
+        }
+        aux += `Scripture LIKE \'%${element}%\' OR `;
+      }
+      aux += `Scripture LIKE \'%${words[words.length - 1]}%\')`;
+    } else {
+      if (sql_injection_barrier.test(words)) {
+        return null;
+      }
+      aux += `(Scripture LIKE \"%${words}%\")`;
+    }
+
+    let sql = `SELECT * FROM bible WHERE ${aux} LIMIT 7;`;
+    console.log(sql);
+
+    let rows = this.processSQL(sql, 'ALL');
+
     if (rows) {
       let listOfVerses = Array();
       for (let index = 0; index < rows.length; index++) {
